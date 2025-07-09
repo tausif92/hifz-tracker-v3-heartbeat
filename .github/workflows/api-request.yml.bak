@@ -3,19 +3,17 @@ name: Heartbeat API Check Every 5 Minutes
 on:
   schedule:
     - cron: '*/5 * * * *'  # Every 5 minutes
-  workflow_dispatch:        # Allows manual trigger
+  workflow_dispatch:        # Allow manual run too
 
 jobs:
   ping-server:
     runs-on: ubuntu-latest
     steps:
-      - name: Make POST request and log response
+      - name: POST to /login API
         run: |
-          RESPONSE=$(curl -s -X POST "https://hifz-tracker-v3-server.onrender.com/login" \
+          curl -X POST "https://hifz-tracker-v3-server.onrender.com/login" \
             -H "Content-Type: application/json" \
             -d '{
               "email": "heartbeat@hifz.com",
               "password": "user123"
-            }')
-          echo "API Response:"
-          echo "$RESPONSE"
+            }'
